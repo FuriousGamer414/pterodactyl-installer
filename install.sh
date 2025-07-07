@@ -28,8 +28,7 @@ set -e
 #                                                                                    #
 ######################################################################################
 
-export GITHUB_SOURCE="v1.1.1"
-export SCRIPT_RELEASE="v1.1.1"
+# Removed version-based variables; only using master branch now
 export GITHUB_BASE_URL="https://raw.githubusercontent.com/FuriousGamer414/pterodactyl-installer"
 
 LOG_PATH="/var/log/pterodactyl-installer.log"
@@ -50,8 +49,7 @@ source /tmp/lib.sh
 execute() {
   echo -e "\n\n* pterodactyl-installer $(date) \n\n" >>$LOG_PATH
 
-  [[ "$1" == *"canary"* ]] && export GITHUB_SOURCE="master" && export SCRIPT_RELEASE="canary"
-  update_lib_source
+  # Always use master branch, no version switching
   run_ui "${1//_canary/}" |& tee -a $LOG_PATH
 
   if [[ -n $2 ]]; then
@@ -88,10 +86,10 @@ while [ "$done" == false ]; do
     "panel;wings"
     # "uninstall"
 
-    "panel_canary"
-    "wings_canary"
-    "panel_canary;wings_canary"
-    "uninstall_canary"
+    "panel"
+    "wings"
+    "panel;wings"
+    "uninstall"
   )
 
   output "What would you like to do?"
